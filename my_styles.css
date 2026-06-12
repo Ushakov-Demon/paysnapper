@@ -2208,6 +2208,7 @@ footer {
 	transform: translateX(-50%) translateY(0);
 }
 
+/* Variable blocks Section */
 .vbs-section {
         background: var(--bg-panel);
         border-top: 1px solid var(--border-subtle);
@@ -2228,8 +2229,8 @@ footer {
 }
 
 .section-head {
-margin-bottom: 3rem;
-max-width: 60ch;
+	margin-bottom: 3rem;
+	max-width: 60ch;
 }
 
 .vbs-section h2 {
@@ -2459,3 +2460,88 @@ a.single-tile:visited {
 		max-width: calc(100% - 1.5rem);
 	}
 }
+/* === Variable blocks Section END */
+
+/* Coverage ( Payment gateways by region NEW ) Section */
+.section-coverage {
+	background: var(--bg-panel);
+	border-block: 1px solid var(--border-subtle);
+}
+
+.coverage-table-wrap {
+	background: var(--bg-card);
+	border: 1px solid var(--border-subtle);
+	border-radius: 18px;
+	overflow: hidden;
+}
+
+.coverage-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+}
+
+.coverage-table th {
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: #6e6e7a;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.coverage-table tr:hover td {
+    background: rgba(255, 43, 61, 0.04);
+}
+
+.coverage-table th,
+.coverage-table td {
+	text-align: left;
+	padding: 1.1rem 1.5rem;
+	border-bottom: 1px solid var(--border-subtle);
+}
+
+.country-cell {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+	font-weight: 600;
+}
+
+.country-flag {
+	font-size: 1.4rem;
+}
+
+.country-name {
+	color: #fff;
+}
+
+.wallet-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.wallet-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.3rem 0.7rem;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--border-subtle);
+	border-radius: 6px;
+	font-size: 0.82rem;
+	color: #b3b3bd;
+	font-weight: 500;
+	transition: all 0.15s;
+}
+
+a.wallet-tag:visited {
+	color: #b3b3bd;
+}
+
+a.wallet-tag:hover {
+	border-color: var(--accent-red);
+	color: #fff;
+	background: rgba(255, 43, 61, 0.06);
+}
+/* === Coverage Section END */

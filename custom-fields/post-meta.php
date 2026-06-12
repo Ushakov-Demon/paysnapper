@@ -60,6 +60,11 @@ function paysnapper_meta_fields() {
 	    'singular_name' => __( 'Region' ),
 	);
 
+	$gateways_labels = array(
+	    'plural_name'   => __( 'Gateways' ),
+	    'singular_name' => __( 'Gateway' ),
+	);
+
 	$chain_block_labels = array(
 	    'plural_name'   => __( 'Chain Blocks' ),
 	    'singular_name' => __( 'Chain Block' ),
@@ -552,44 +557,41 @@ function paysnapper_meta_fields() {
 					Field::make( 'text', 'pg_section_title', __( 'Section Title' ) )
 						->set_required( true ),
 					Field::make( 'textarea', 'pg_section_desc', __( 'Section Description' ) ),
-					Field::make( 'complex', 'pg_info_tiles', __( 'Info Tiles' ) )
-						->setup_labels( $info_tiles_labels )
-						->set_collapsed( true )
-						->add_fields( array(
-							Field::make( 'text', 'pg_tile_title', __( 'Tile Title' ) )
-								->set_width( 50 )
-								->set_required( true ),
-							Field::make( 'textarea', 'pg_tile_desc', __( 'Tile Description' ) )
-								->set_width( 50 )
-								->set_required( true ),
-						) )
-						->set_header_template( '
-						    <% if (pg_tile_title) { %>
-						        <%- pg_tile_title %>
-						    <% } %>
-						' ),
-					Field::make( 'text', 'pg_gateways_section_list_title', __( 'Regions list Title' ) )
-						->set_default_value( 'Key markets - payment rails' ),
-					Field::make( 'complex', 'pg_gateways_list', __( 'Payment Gateways List' ) )
+					Field::make( 'complex', 'pg_counries_list', __( 'Payment Gateways List' ) )
 						->setup_labels( $regions_labels )
 						->set_collapsed( true )
 						->add_fields( array(
-							Field::make( 'text', 'pg_gatawey_region_post_link', __( 'Region Post Link' ) ),
 							Field::make( 'image', 'pg_gateway_region_image', __( 'Region Image' ) )
+								->set_value_type( 'url' )
 								->set_required( true )
 								->set_width( 20 ),
 							Field::make( 'text', 'pg_gateway_region_name', __( 'Region Name' ) )
 								->set_width( 40 )
 								->set_required( true ),
-							Field::make( 'text', 'pg_gateway_desc', __( 'Gateway Description' ) )
-								->set_width( 40 )
-								->set_required( true ),
+							Field::make( 'text', 'pg_gatawey_region_post_link', __( 'Region Post Link' ) )
+								->set_width( 40 ),
+							Field::make( 'complex', 'pg_region_gateway_list', __( 'Gateway List' ) )
+								->setup_labels( $gateways_labels )
+								->set_collapsed( true )
+								->add_fields( array(
+									Field::make( 'text', 'pg_gateway_name', __( 'Gateway Name' ) )
+										->set_width( 50 )
+										->set_required( true ),
+									Field::make( 'text', 'pg_gateway_lnk', __( 'Gateway Link' ) )
+										->set_width( 50 ),
+								) )
+								->set_header_template( '
+								    <% if (pg_gateway_name) { %>
+								        <%- pg_gateway_name %>
+								    <% } %>
+									
+								' )
 						) )
 						->set_header_template( '
 						    <% if (pg_gateway_region_name) { %>
 						        <%- pg_gateway_region_name %>
 						    <% } %>
-						' ),	
-				) )
+						' )
+				) )		
 		) );
 }

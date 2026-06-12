@@ -1,98 +1,91 @@
 <?php
-$gataways = $section['pg_gateways_list'];
+$countries = $section['pg_counries_list'];
 
-if ( empty( $gataways ) ) {
+if ( empty( $countries ) ) {
     return;
 }
 
-$section_id = $section['pg_gateways_section_id'] ?: uniqid();
+$section_id = $section['pg_section_id'] ?: uniqid();
+$small_title = $section['pg_section_marker'];
+$title = $section['pg_section_title'];
+$description = $section['pg_section_desc'];
 ?>
 
-<section class="regions-gatawey" id="<?php echo $section_id?>">
-    <div class="container">
-        <div class="wrap d-flex justify-content-center align-items-screth">
-            <div class="side regions-side">
-                <p class="side-hending">
-                    <?php echo esc_html( $section['pg_gateways_section_list_title'] ); ?>
-                </p>
+<section class="section vbs-section section-coverage" id="<?php echo $section_id; ?>">
+  <div class="container">
+    <div class="section-head">
+    <?php
+        if ( ! empty( $small_title ) ) :
+        ?>
+        <span class="eyebrow"><?php echo $small_title; ?></span>
+        <?php
+    endif;
+    ?>
 
-                <div class="regions-list">
+      <h2 class="display-lg"><?php echo $title; ?></h2>
+
+    <?php
+    if ( ! empty( $description ) ) :
+        ?>
+        <p class="lead"><?php echo esc_html( $description ); ?></p>
+        <?php
+    endif;
+    ?>
+    </div>
+
+    <div class="coverage-table-wrap">
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>Country</th>
+
+            <th>Local wallets</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <?php
+        foreach ( $countries as $country ) :
+            if ( ! empty( $country['pg_gatawey_region_post_link'] ) ) {
+                $region_selector_start = '<a href="' . esc_url( $country['pg_gatawey_region_post_link'] ) . '" class="country-cell">';
+                $region_selector_end = '</a>';
+            } else {
+                $region_selector_start = '<div class="country-cell">';
+                $region_selector_end = '</div>';
+            }
+            ?>
+            <tr>
+                <td>
+                    <?php echo $region_selector_start; ?>
+                        <span class="country-flag">
+                            <img src="<?php echo esc_url( $country['pg_gateway_region_image'] ); ?>" width="28" height="28" alt="<?php echo esc_attr( $country['pg_gateway_region_name'] ); ?>">
+                        </span>
+
+                        <span class="country-name"><?php echo esc_html( $country['pg_gateway_region_name'] ); ?></span>
+                    <?php echo $region_selector_end; ?>
+                </td>
+
+                <td>
+                    <div class="wallet-list">
                     <?php
-                    foreach ( $gataways as $gateway ) :
-                        $image_url = wp_get_attachment_image_url( $gateway['pg_gateway_region_image'], 'full' );
+                    foreach ( $country['pg_region_gateway_list'] as $gateway ) :
+                        $method_selector = ! empty( $gateway['pg_gateway_lnk'] ) ? '<a href="' . esc_url( $gateway['pg_gateway_lnk'] ) . '" class="wallet-tag">' : '<span class="wallet-tag">';
+                        $method_selector_end = ! empty( $gateway['pg_gateway_lnk'] ) ? '</a>' : '</span>';
                         ?>
-                        <div class="region-item d-flex region-item d-flex align-items-center justify-content-between">
-                            <div class="region">
-                                <?php
-                                if ( ! empty( $gateway['pg_gatawey_region_post_link'] ) ) :
-                                    ?>
-                                    <a href="<?php echo esc_url( $gateway['pg_gatawey_region_post_link'] ); ?>">
-                                <?php endif; ?>   
-                                    <img src="<?php echo esc_url( $image_url ); ?>" width="28" height="28" alt="<?php echo esc_attr( $gateway['pg_gateway_region_name'] ); ?>">
-
-                                    <span class="region-name">
-                                        <?php echo esc_html( $gateway['pg_gateway_region_name'] ); ?>
-                                    </span>
-                                <?php
-                                if ( ! empty( $gateway['pg_gatawey_region_post_link'] ) ) :
-                                    ?>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="region-gatawey">
-                                <span>
-                                    <?php echo esc_html( $gateway['pg_gateway_desc'] ); ?>
-                                </span>
-                            </div>
-                        </div>
+                            <?php echo $method_selector; ?>
+                                <?php echo esc_html( $gateway['pg_gateway_name'] ); ?>
+                            <?php echo $method_selector_end; ?>
                         <?php
                     endforeach;
                     ?>
-                </div>
-            </div>
-
-            <div class="side infos-side d-flex flex-column">
-                <?php
-                if ( ! empty( $section['pg_section_marker'] ) ) :
-                    ?>
-                    <p class="marker-red">
-                        <?php echo esc_html( $section['pg_section_marker'] ); ?>
-                    </p>
-                    <?php
-                endif;
-                ?>
-                
-                <h2><?php echo esc_html( $section['pg_section_title'] ); ?></h2>
-
-                <p class="second">
-                    <?php echo esc_html( $section['pg_section_desc'] ); ?>
-                </p>
-
-                <?php
-                if ( ! empty( $section['pg_info_tiles'] ) ) :
-                    ?>
-                    <div class="info-tiles d-flex justify-content-center flex-wrap">
-                        <?php
-                        foreach ( $section['pg_info_tiles'] as $tile ) :
-                            ?>
-                            <div class="info-tile">
-                                <p class="tile-title">
-                                    <?php echo esc_html( $tile['pg_tile_title'] ); ?>
-                                </p>
-
-                                <p class="tile-description">
-                                    <?php echo esc_html( $tile['pg_tile_desc'] ); ?>
-                                </p>
-                            </div>
-                            <?php
-                        endforeach;
-                        ?>
                     </div>
-                    <?php
-                endif;
-                ?>
-            </div>
-        </div>
+                </td>
+            </tr>
+            <?php
+        endforeach;
+        ?>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>

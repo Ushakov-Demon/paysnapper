@@ -70,6 +70,11 @@ function paysnapper_meta_fields() {
 	    'singular_name' => __( 'Chain Block' ),
 	);
 
+	$items_labels = array(
+	    'plural_name'   => __( 'Items' ),
+	    'singular_name' => __( 'Item' ),
+	);
+
 	// HERO SECTION
 	Container::make( 'post_meta', __( 'Hero Section' ) )
 		->where( 'post_type', '=', 'page' )
@@ -238,6 +243,7 @@ function paysnapper_meta_fields() {
 						    <% } %>
 						' ),
 				) )
+
 				// Variable blocks
 				->add_fields( 'variable_blocks_section', array(
 					Field::make( 'text', 'vbs_section_id', __( 'Section ID' ) ),
@@ -404,6 +410,43 @@ function paysnapper_meta_fields() {
 						<% } %>
 					' ),
 				) )
+
+				// Out Many
+				->add_fields( 'out_money_section', array(
+					Field::make( 'separator', 'om_section_sep', __( 'Left side content' ) ),
+					Field::make( 'text', 'om_section_id', __( 'Section ID' ) ),
+					Field::make( 'text', 'om_section_small_title', __( 'Small Section Title' ) ),
+					Field::make( 'text', 'om_section_title', __( 'Section Title' ) )
+						->set_required( true ),
+					Field::make( 'textarea', 'om_section_desc', __( 'Section Description' ) ),
+					Field::make( 'complex', 'om_items', __( 'Items List' ) )
+						->set_collapsed( true )
+						->setup_labels( $items_labels )
+						->add_fields( array(
+							Field::make( 'text', 'om_item_bage', __( 'Item Bage' ) )
+								->set_width( 50 ),
+							Field::make( 'text', 'om_item_title', __( 'Item Title' ) )
+								->set_width( 50 )
+								->set_required( true ),
+							Field::make( 'textarea', 'om_item_desc', __( 'Item Description' ) )
+						) )
+						->set_header_template( '
+							<% if (om_item_title) { %>
+								<%- om_item_title %>
+							<% } %>
+						' ),
+					Field::make( 'separator', 'om_section_sep_2', __( 'Right side content' ) ),
+					Field::make( 'textarea', 'om_section_right_center_element', __( 'Center Element' ) ),
+					Field::make( 'text', 'om_section_right_left_element', __( 'Left Element' ) )
+						->set_width( 25 ),
+					Field::make( 'text', 'om_section_right_right_element', __( 'Right Element' ) )
+						->set_width( 25 ),
+					Field::make( 'text', 'om_section_right_bottom_element', __( 'Bottom Element' ) )
+						->set_width( 25 ),
+					Field::make( 'text', 'om_section_right_top_element', __( 'Top Element' ) )
+						->set_width( 25 )	
+				) )
+
 				// Light Info Tabs
 				->add_fields( 'light_info_tabs', array(
 					Field::make( 'text', 'lit_id', __( 'Section ID' ) )
@@ -437,6 +480,7 @@ function paysnapper_meta_fields() {
 						    <% } %>
 						' ),
 				) )
+
 				// Demonstration of Possibilities
 				->add_fields( 'capabilities', array(
 					Field::make( 'text', 'possibl_section_id', __( 'Section ID' ) )
@@ -466,6 +510,7 @@ function paysnapper_meta_fields() {
 						    <% } %>
 						' ),
 				) )
+
 				// Client logos
 				->add_fields( 'client_logos', array(
 					Field::make( 'text', 'logos_section_id', __( 'Section ID' ) ),
@@ -481,6 +526,7 @@ function paysnapper_meta_fields() {
 						->set_width( 50 )
 						->set_default_value( 3 )	
 				) )
+
 				// Contact Form
 				->add_fields( 'contact_form', array(
 					Field::make( 'image', 'cf_logo_img', __( 'Section Logo' ) )
@@ -495,6 +541,7 @@ function paysnapper_meta_fields() {
 					Field::make( 'text', 'cf_form_shortcode', __( 'Form Shortcode' ) )
 						->set_required( true )		
 				) )
+
 				// Contact Us
 				->add_fields( 'contact_us', array(
 					Field::make( 'text', 'cus_section_id', __( 'Section ID' ) )
@@ -522,6 +569,7 @@ function paysnapper_meta_fields() {
 						    <% } %>
 						' ),
 				) )
+
 				// Steps Section
 				->add_fields( 'steps', array(
 					Field::make( 'text', 'steps_section_id', __( 'Section ID' ) )
@@ -547,6 +595,7 @@ function paysnapper_meta_fields() {
 						    <% } %>
 						' ),
 				) )
+
 				// Payment gateways by region
 				->add_fields( 'payment_gateways_by_region', array(
 					Field::make( 'text', 'pg_section_id', __( 'Section ID' ) )

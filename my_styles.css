@@ -73,7 +73,11 @@
 	--bg-card: #14141a;
 	--border-subtle: rgba(255, 255, 255, 0.08);
 	--accent-red: #ff2b3d;
+	--accent-red-deep: #8b0e1f;
+	--accent-red-glow-strong: rgba(255, 43, 61, 0.35);
 	--success-green: #4ade80;
+	--text-secondary: #b3b3bd;
+	--font-display: "Archivo", "Impact", sans-serif;
 }
 
 body {
@@ -2208,11 +2212,19 @@ footer {
 	transform: translateX(-50%) translateY(0);
 }
 
+.lead {
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 62ch;
+}
+
 /* Variable blocks Section */
 .vbs-section {
-        background: var(--bg-panel);
-        border-top: 1px solid var(--border-subtle);
-    }
+	background: var(--bg-panel);
+	border-top: 1px solid var(--border-subtle);
+}
 
 .section-head .eyebrow {
 	display: block;
@@ -2450,7 +2462,7 @@ a.single-tile:visited {
 	.vbs-section .triple-grid,
 	.vbs-section .wrapper.quad-grid {
 		flex-direction: column;
-		gap: 0.75rem;
+		align-items: center;
 	}
 
 	.vbs-section .double-grid .single-tile,
@@ -2545,3 +2557,148 @@ a.wallet-tag:hover {
 	background: rgba(255, 43, 61, 0.06);
 }
 /* === Coverage Section END */
+
+/* Out Many Section */
+.om-section {
+	background: #07070a;
+	font-family: "Manrope", system-ui, sans-serif;
+}
+
+.settlement-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4rem;
+	align-items: center;
+}
+
+.settlement-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin-top: 2rem;
+}
+
+.settle-item {
+	display: flex;
+	gap: 1.25rem;
+	align-items: flex-start;
+}
+
+.settle-tag {
+	flex-shrink: 0;
+	padding: 0.3rem 0.7rem;
+	border-radius: 6px;
+	font-family: var(--font-display);
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	background: var(--accent-red);
+	color: #fff;
+	margin-top: 0.2rem;
+}
+
+.settle-item h3 {
+	font-size: 1.05rem;
+	font-weight: 700;
+	margin-bottom: 0.35rem;
+	color: #fff;
+}
+
+.settle-item p {
+	font-size: 0.93rem;
+	color: var(--text-secondary);
+	line-height: 1.55;
+}
+
+.currency-orbit {
+	position: relative;
+	aspect-ratio: 1;
+	display: grid;
+	place-items: center;
+}
+
+.currency-ring {
+	position: absolute;
+	inset: 10%;
+	border: 1px dashed rgba(255, 255, 255, 0.12);
+	border-radius: 50%;
+}
+
+.currency-ring.outer {
+	inset: 0;
+}
+
+.currency-center {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--accent-red), var(--accent-red-deep));
+	display: grid;
+	place-items: center;
+	font-family: var(--font-display);
+	font-size: 1rem;
+	text-transform: uppercase;
+	color: #fff;
+	letter-spacing: 0.05em;
+	box-shadow: 0 0 60px var(--accent-red-glow-strong);
+	position: relative;
+	z-index: 2;
+}
+
+.currency-center p {
+	margin: 0;
+}
+
+.currency-bubble {
+	position: absolute;
+	width: 68px;
+	height: 68px;
+	border-radius: 50%;
+	background: var(--bg-card);
+	border: 1px solid var(--border-subtle);
+	display: grid;
+	place-items: center;
+	font-weight: 700;
+	font-size: 0.82rem;
+	color: #fff;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.currency-bubble.right {
+	top: 50%;
+	right: 0;
+	transform: translate(0, -50%);
+}
+
+.currency-bubble.bottom {
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	color: var(--success-green);
+}
+
+.currency-bubble.left {
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+	color: var(--success-green);
+}
+
+.currency-bubble.top {
+	top: 0;
+}
+
+@media (max-width: 960px) {
+	.settlement-grid {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.settle-item {
+		flex-direction: column;
+	}
+}
+
+/* === Out Many Section END */

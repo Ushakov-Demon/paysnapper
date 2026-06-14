@@ -411,7 +411,53 @@ function paysnapper_meta_fields() {
 					' ),
 				) )
 
-				// Out Many
+				// Live coverage
+				->add_fields( 'live_coverage_section', array(
+					Field::make( 'text', 'lc_section_id', __( 'Section ID' ) )
+						->set_width( 50 ),
+					Field::make( 'text', 'lc_aria_label', __( 'Widget Aria Label' ) )
+						->set_width( 50 ),	
+					Field::make( 'text', 'lc_section_small_title', __( 'Small Section Title' ) ),
+					Field::make( 'text', 'lc_section_title', __( 'Section Title' ) )
+						->set_required( true ),
+					Field::make( 'textarea', 'lc_section_desc', __( 'Section Description' ) ),
+					Field::make( 'text', 'lc_widget_title', __( 'Widget Title' ) )
+						->set_required( true )
+						->set_width( 50 )
+						->set_default_value( 'Integration status, last 30 days' ),
+					Field::make( 'text', 'lc_widget_status_str', __( 'Status String' ) )
+						->set_required( true )
+						->set_width( 50 )
+						->set_default_value( 'All systems operational' ),
+					Field::make( 'text', 'lc_widget_footer_txt', __( 'Footer Text' ) )
+						->set_width( 33 )
+						->set_default_value( 'See all 17 integrations across 11 markets' ),
+					Field::make( 'text', 'lc_widget_footer_lnk_txt', __( 'Link Text' ) )
+						->set_width( 33 )
+						->set_default_value( 'Full status page' ),
+					Field::make( 'text', 'lc_widget_footer_lnk', __( 'Link Href' ) )
+						->set_width( 33 ),
+					Field::make( 'complex', 'lc_countries_list', __( 'Countries List' ) )
+						->set_collapsed( true )
+						->setup_labels( $regions_labels )
+						->add_fields( array(
+							Field::make( 'text', 'lc_country_name', __( 'Country Name' ) )
+								->set_width( 40 )
+								->set_required( true ),
+							Field::make( 'text', 'lc_country_pay', __( 'Pay Method' ) )
+								->set_width( 40 )
+								->set_required( true ),	
+							Field::make( 'image', 'lc_country_flag', __( 'Flag Image' ) )
+								->set_width( 20 )
+								->set_value_type( 'url' )
+								->set_required( true )
+						) )
+						->set_header_template( '
+						    "<%- lc_country_pay %>" <%- lc_country_name %>
+						' )
+				) )
+
+				// Out Money
 				->add_fields( 'out_money_section', array(
 					Field::make( 'separator', 'om_section_sep', __( 'Left side content' ) ),
 					Field::make( 'text', 'om_section_id', __( 'Section ID' ) ),

@@ -1,8 +1,44 @@
 <?php
+add_action( 'init', 'paysnapper_rigister_post_types' );
 add_action( 'paysnapper_social_links'   , 'paysnapper_social_link_items' );
 add_action( 'paysnapper_login_btn'      , 'paysnapper_login_btn' );
 add_action( 'paysnapper_get_a_quote_btn', 'paysnapper_get_a_quote_btn' );
 add_action( 'paysnapper_nav_items'      , 'paysnapper_nav_items' );
+
+function paysnapper_rigister_post_types() {
+    register_post_type( 'employees', [
+        'label' => null,
+        'labels' => [
+            'name'                  => __( 'Employees' ),
+            'singular_name'         => __( 'Employee' ),
+            'add_new'               => __( 'Add New Employee' ),
+            'add_new_item'          => __( 'Add Employee' ),
+            'edit_item'             => __( 'Edit Employee' ),
+            'new_item'              => __( 'New Employee' ),
+            'view_item'             => __( 'View Employee' ),
+            'search_items'          => __( 'Search' ),
+            'not_found'             => __( 'Not Found' ),
+            'not_found_in_trash'    => __( 'Not Found in Trash' ),
+            'parent_item_colon'     => '',
+            'menu_name'             => __( 'Employees' ),
+        ],
+        'description'         => '',
+        'public'              => true,
+        'publicly_queryable'  => false,
+        'show_in_menu'        => true,
+        'show_in_rest'        => null,
+        'rest_base'           => null,
+        'show_in_nav_menus'   => true,
+        'menu_icon'           => 'dashicons-groups',
+        'menu_position'       => 5,
+        'hierarchical'        => false,
+        'supports'            => ['title', 'thumbnail', 'excerpt', 'page-attributes'],
+        'taxonomies'          => [],
+        'has_archive'         => false,
+        'rewrite'             => true,
+        'query_var'           => true,
+    ] );
+}
 /**
  * Print social media links items
  */

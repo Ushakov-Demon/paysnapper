@@ -457,6 +457,44 @@ function paysnapper_meta_fields() {
 						' )
 				) )
 
+				// Paysnapper Company Info
+				->add_fields( 'paysnapper_company_info', array(
+					Field::make( 'text', 'pcs_section_id', __( 'Section ID' ) ),
+					Field::make( 'text', 'pcs_section_small_title', __( 'Small Section Title' ) ),
+					Field::make( 'text', 'pcs_section_title', __( 'Section Title' ) )
+						->set_required( true ),
+					Field::make( 'textarea', 'pcs_section_desc', __( 'Setion Description' ) ),	
+					Field::make( 'separator', 'pcs_company_sep', __( 'Company Info Block' ) ),
+					Field::make( 'complex', 'pcs_info_items', __( 'Info Items' ) )
+						->set_collapsed( true )
+						->setup_labels( $items_labels )
+						->add_fields( array(
+							Field::make( 'text', 'info_item_label', __( 'Label' ) )
+								->set_required( true ),
+							Field::make( 'text', 'info_item_value', __( 'Value' ) )
+								->set_required( true )	
+						) )
+						->set_header_template( '
+							<%- info_item_label %>
+						' ),
+					Field::make( 'separator', 'pcs_employees_sep', __( 'Employees Block' ) ),
+					Field::make( 'text', 'pcs_emp_block_title', __( 'Block Title' ) )
+						->set_default_value( 'The people behind Paysnapper' ),
+					Field::make( 'textarea', 'pcs_emp_block_desc', __( 'Block Description' ) ),
+					Field::make( 'association', 'pcs_employees_list', __( 'Employees' ) )
+						->set_types( array(
+							array(
+								'type'      => 'post',
+								'post_type' => 'employees',
+							)
+						) ),
+					Field::make( 'text', 'pcs_emp_block_footer_txt', __( 'Block Footer Text' ) ),
+					Field::make( 'text', 'pcs_emp_block_footer_link_txt', __( 'Block Footer Link Label' ) )
+						->set_width( 50 ),
+					Field::make( 'text', 'pcs_emp_block_footer_link_href', __( 'Block Footer Link Href' ) )
+						->set_width( 50 )
+				) )
+
 				// Out Money
 				->add_fields( 'out_money_section', array(
 					Field::make( 'separator', 'om_section_sep', __( 'Left side content' ) ),
@@ -689,4 +727,11 @@ function paysnapper_meta_fields() {
 						' )
 				) )		
 		) );
+
+		Container::make( 'post_meta', __( 'Employee Details' ) )
+			->where( 'post_type', '=', 'employees' )
+			->add_fields( array(
+				Field::make( 'text', 'emp_position', __( 'Job title' ) ),
+				Field::make( 'text', 'emp_linkedin', __( 'Linkedin' ) ),
+			) );
 }

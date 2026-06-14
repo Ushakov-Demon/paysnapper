@@ -19,7 +19,6 @@
 	font-style: normal;
 }
 
-
 @font-face {
 	font-family: 'Unbounded Medium';
 	src: url('assets/fonts/Unbounded/Unbounded-Medium.woff2') format('woff2');
@@ -71,6 +70,7 @@
 	--wp--style--global--wide-size: 1000px;
 	--bg-panel: #0d0d11;
 	--bg-card: #14141a;
+	--bg-card-hover: #1a1a22;
 	--bg-black: #07070a;
 	--border-subtle: rgba(255, 255, 255, 0.08);
 	--accent-red: #ff2b3d;
@@ -2840,3 +2840,141 @@ a.wallet-tag:hover {
 	font-weight: 600;
 }
 /* === Live coverage END */
+
+/* Paysnapper Company Info */
+.section-trust {
+	background: var(--bg-panel);
+	border-block: 1px solid var(--border-subtle);
+}
+
+.trust-card {
+	background: var(--bg-card);
+	border: 1px solid var(--border-subtle);
+	border-radius: 18px;
+	padding: 2.25rem;
+	margin-bottom: 1.5rem;
+}
+
+.trust-card h3 {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin-bottom: 1.25rem;
+	color: #fff;
+}
+
+.trust-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1.25rem 2rem;
+}
+
+.trust-item label {
+	display: block;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: #6e6e7a;
+	margin-bottom: 0.35rem;
+	font-weight: 700;
+}
+
+.trust-item .value {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: #fff;
+}
+
+.trust-card {
+	background: var(--bg-card);
+	border: 1px solid var(--border-subtle);
+	border-radius: 18px;
+	padding: 2.25rem;
+	margin-bottom: 1.5rem;
+}
+
+.trust-card h3 {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin-bottom: 1.25rem;
+	color: #fff;
+}
+
+.team-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.25rem;
+	margin-top: 2rem;
+}
+
+.team-card {
+	background: var(--bg-card);
+	border: 1px solid var(--border-subtle);
+	border-radius: 16px;
+	padding: 1.5rem;
+	text-align: center;
+	transition: border-color 0.2s;
+}
+
+.team-photo {
+	width: 88px;
+	height: 88px;
+	border-radius: 50%;
+	margin: 0 auto 1rem;
+	background: linear-gradient(135deg, var(--bg-card-hover), var(--bg-panel));
+	display: grid;
+	place-items: center;
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: 700;
+	overflow: hidden;
+}
+
+.team-photo img {
+	display: block;
+	line-height: 1;
+}
+
+.team-card .name {
+	font-weight: 700;
+	color: #fff;
+	margin-bottom: 0.25rem;
+}
+
+.team-card .title {
+	font-size: 0.82rem;
+	color: #6e6e7a;
+	margin-bottom: 0.5rem;
+	background: transparent;
+}
+
+.team-card .linkedin {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	color: #6e6e7a;
+	font-size: 0.8rem;
+}
+
+.team-link-out {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--text-secondary);
+	font-size: 0.95rem;
+}
+
+.team-link-out a {
+	color: var(--accent-red);
+	font-weight: 600;
+}
+
+@media (max-width: 560px) {
+	.trust-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.team-grid {
+		grid-template-columns: 1fr;
+	}
+}
+/* === Paysnapper Company Info */

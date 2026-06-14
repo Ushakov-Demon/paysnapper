@@ -75,6 +75,11 @@ function paysnapper_meta_fields() {
 	    'singular_name' => __( 'Item' ),
 	);
 
+	$merchants_labels = array(
+		'plural_name'   => __( 'Merchants' ),
+	    'singular_name' => __( 'Merchant' ),
+	);
+
 	// HERO SECTION
 	Container::make( 'post_meta', __( 'Hero Section' ) )
 		->where( 'post_type', '=', 'page' )
@@ -493,6 +498,34 @@ function paysnapper_meta_fields() {
 						->set_width( 50 ),
 					Field::make( 'text', 'pcs_emp_block_footer_link_href', __( 'Block Footer Link Href' ) )
 						->set_width( 50 )
+				) )
+
+				// Paysnapper Build
+				->add_fields( 'paysnapper_build', array(
+					Field::make( 'text', 'pb_section_id', __( 'Section ID' ) ),
+					Field::make( 'text', 'pb_section_small_title', __( 'Small Section Title' ) ),
+					Field::make( 'text', 'pb_section_title', __( 'Section Title' ) )
+						->set_required( true ),
+					Field::make( 'complex', 'pb_merchants_list', __( 'Merchants List' ) )
+						->set_collapsed( true )
+						->setup_labels( $merchants_labels )
+						->add_fields( array(
+							Field::make( 'text', 'merchant_name', __( 'Merchant Name' ) )
+								->set_required( true )
+								->set_width( 40 ),
+							Field::make( 'text', 'merchant_industry', __( 'Merchant Industry' ) )
+								->set_required( true )
+								->set_width( 40 ),
+							Field::make( 'image', 'merchant_logo', __( 'Logo' ) )
+								->set_required( true )
+								->set_value_type( 'url' )
+								->set_width( 20 ),
+							Field::make( 'text', 'merchant_url', __( 'Merchant Link Href' ) ),
+							Field::make( 'textarea', 'merchant_short_desc', __( 'Short Description' ) )	
+						) )
+						->set_header_template( '
+							<%- merchant_name %> <%- merchant_industry %>
+						' ),
 				) )
 
 				// Out Money

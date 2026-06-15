@@ -564,6 +564,24 @@ function paysnapper_meta_fields() {
 						->set_width( 25 )	
 				) )
 
+				// FAQ Section
+				->add_fields( 'faq_section', array(
+					Field::make( 'text', 'fs_section_id', __( 'Section ID' ) ),
+					Field::make( 'text', 'fs_section_small_title', __( 'Small Section Title' ) )
+						->set_default_value( 'FAQ' ),
+					Field::make( 'text', 'fs_section_title', __( 'Section Title' ) )
+						->set_default_value( 'Questions Paysnapper gets asked' )
+						->set_required( true ),
+					Field::make( 'association', 'faqs_list', __( 'FAQ`s' ) )
+						->help_text( 'Posts from the selected categories will be selected' )
+						->set_types( array(
+							array(
+								'type'     => 'term',
+								'taxonomy' => 'faq_cat',
+							),
+						) )
+				) )
+
 				// Light Info Tabs
 				->add_fields( 'light_info_tabs', array(
 					Field::make( 'text', 'lit_id', __( 'Section ID' ) )

@@ -1123,6 +1123,19 @@ footer {
     margin-left: 15px;
     margin-right: 15px;
     margin-bottom: 15px;
+
+	/* width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.98rem;
+    padding: 1.15rem 1.4rem;
+    outline: none;
+    transition: background 0.18s, border-color 0.18s;
+    -webkit-appearance: none;
+    appearance: none; */
 }
 
 
@@ -1384,6 +1397,11 @@ footer {
     background-color: #212121;
     margin-top: 0;
     padding: 3rem 0;
+	padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background: radial-gradient(ellipse 70% 60% at 50% 35%, rgba(255, 43, 61, 0.35), transparent 70%), #07070a;
 }
 
 .contacts-section {
@@ -2222,6 +2240,14 @@ footer {
     max-width: 62ch;
 }
 
+.display-lg {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+}
+
 /* Variable blocks Section */
 .vbs-section {
 	background: var(--bg-panel);
@@ -3044,5 +3070,11 @@ a.wallet-tag:hover {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.55;
+}
+
+@media (max-width: 960px) {
+    .case-grid {
+        grid-template-columns: 1fr;
+    }
 }
 /* === Paysnapper Build END */

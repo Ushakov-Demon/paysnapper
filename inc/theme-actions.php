@@ -1,5 +1,6 @@
 <?php
 add_action( 'init', 'paysnapper_rigister_post_types' );
+add_action( 'init', 'paysnapper_register_taxomomies' );
 add_action( 'paysnapper_social_links'   , 'paysnapper_social_link_items' );
 add_action( 'paysnapper_login_btn'      , 'paysnapper_login_btn' );
 add_action( 'paysnapper_get_a_quote_btn', 'paysnapper_get_a_quote_btn' );
@@ -38,6 +39,56 @@ function paysnapper_rigister_post_types() {
         'rewrite'             => true,
         'query_var'           => true,
     ] );
+
+    register_post_type( 'faq', [
+        'label' => null,
+        'labels' => [
+            'name'                  => __( 'FAQ' ),
+            'singular_name'         => __( 'FAQ' ),
+            'add_new'               => __( 'Add New FAQ' ),
+            'add_new_item'          => __( 'Add FAQ' ),
+            'edit_item'             => __( 'Edit FAQ' ),
+            'new_item'              => __( 'New FAQ' ),
+            'view_item'             => __( 'View FAQ' ),
+            'search_items'          => __( 'Search' ),
+            'not_found'             => __( 'Not Found' ),
+            'not_found_in_trash'    => __( 'Not Found in Trash' ),
+            'parent_item_colon'     => '',
+            'menu_name'             => __( 'FAQ' ),
+        ],
+        'description'         => '',
+        'public'              => true,
+        'publicly_queryable'  => false,
+        'show_in_menu'        => true,
+        'show_in_rest'        => null,
+        'rest_base'           => null,
+        'show_in_nav_menus'   => true,
+        'menu_icon'           => 'dashicons-testimonial',
+        'menu_position'       => 5,
+        'hierarchical'        => false,
+        'supports'            => ['title', 'editor'],
+        'taxonomies'          => [],
+        'has_archive'         => false,
+        'rewrite'             => true,
+        'query_var'           => true,
+    ] );
+}
+
+function paysnapper_register_taxomomies() {
+    register_taxonomy( 'faq_cat', 'faq', [
+        'labels' => [
+            'name'          => __( 'FAQ Categories' ),
+            'singular_name' => __( 'FAQ Category' ),
+            'add_new_item'  => __( 'Add New FAQ Category' ),
+            'new_item_name' => __( 'New FAQ Category' ),
+            'menu_name'     => __( 'FAQ Categories' ),
+        ],
+        'public'              => true,
+        'hierarchical'        => true,
+        'show_in_rest'        => false,
+        'publicly_queryable'  => false,
+        'rewrite'             => [ 'slug' => 'faq-category' ],
+    ]);
 }
 /**
  * Print social media links items

@@ -1,9 +1,14 @@
 <?php
-$countries = $section['pg_counries_list'];
+$countries = new WP_Query( array(
+	'post_type'   => 'country',
+	'post_status' => 'publish',
+) );
 
-if ( empty( $countries ) ) {
+if ( ! $countries->have_posts() ) {
     return;
 }
+
+$link_wrap = false;
 
 $section_id = $section['pg_section_id'] ?: uniqid();
 $small_title = $section['pg_section_marker'];
@@ -45,9 +50,16 @@ $description = $section['pg_section_desc'];
 
         <tbody>
         <?php
-        foreach ( $countries as $country ) :
-            if ( ! empty( $country['pg_gatawey_region_post_link'] ) ) {
-                $region_selector_start = '<a href="' . esc_url( $country['pg_gatawey_region_post_link'] ) . '" class="country-cell">';
+        while ( $countries->have_posts() ) :
+            $countries->the_post();
+
+            $cId     = get_the_ID( $cId );
+            $c_title = get_the_title( $cId );
+            $flag    = carbon_get_post_meta( $cId, 'cnt_flag_icon' );
+            $walets  = carbon_get_post_meta( $cId, 'cnt_local_wallets' );
+
+            if ( $link_wrap ) {
+                $region_selector_start = '<a href="' . esc_url( get_the_permalink( $cId ) ) . '" class="country-cell">';
                 $region_selector_end = '</a>';
             } else {
                 $region_selector_start = '<div class="country-cell">';
@@ -58,22 +70,22 @@ $description = $section['pg_section_desc'];
                 <td>
                     <?php echo $region_selector_start; ?>
                         <span class="country-flag">
-                            <img src="<?php echo esc_url( $country['pg_gateway_region_image'] ); ?>" width="28" height="28" alt="<?php echo esc_attr( $country['pg_gateway_region_name'] ); ?>">
+                            <img src="<?php echo esc_url( $flag ); ?>" width="28" height="28" alt="<?php echo esc_attr( $c_title ); ?>">
                         </span>
 
-                        <span class="country-name"><?php echo esc_html( $country['pg_gateway_region_name'] ); ?></span>
+                        <span class="country-name"><?php echo esc_html( $c_title ); ?></span>
                     <?php echo $region_selector_end; ?>
                 </td>
 
                 <td>
                     <div class="wallet-list">
                     <?php
-                    foreach ( $country['pg_region_gateway_list'] as $gateway ) :
-                        $method_selector = ! empty( $gateway['pg_gateway_lnk'] ) ? '<a href="' . esc_url( $gateway['pg_gateway_lnk'] ) . '" class="wallet-tag">' : '<span class="wallet-tag">';
-                        $method_selector_end = ! empty( $gateway['pg_gateway_lnk'] ) ? '</a>' : '</span>';
+                    foreach ( $walets as $walet ) :
+                        $method_selector = $link_wrap ? '<a href="' . esc_url( get_the_permalink( $walet['id'] ) ) . '" class="wallet-tag">' : '<span class="wallet-tag">';
+                        $method_selector_end = $link_wrap ? '</a>' : '</span>';
                         ?>
                             <?php echo $method_selector; ?>
-                                <?php echo esc_html( $gateway['pg_gateway_name'] ); ?>
+                                <?php echo get_the_title( $walet['id'] ) ; ?>
                             <?php echo $method_selector_end; ?>
                         <?php
                     endforeach;
@@ -82,7 +94,9 @@ $description = $section['pg_section_desc'];
                 </td>
             </tr>
             <?php
-        endforeach;
+        endwhile;
+
+        wp_reset_postdata();
         ?>
         </tbody>
       </table>

@@ -1,13 +1,46 @@
 <?php
 $double_row_cards = $section['double_row_cards'];
-$section_id       = $section['section_id'] ?: uniqid();
 
 if ( empty( $double_row_cards ) ) {
 	return;
 }
+
+$section_id  = $section['section_id'] ?: uniqid();
+$small_title = $section['drc_section_small_title'];
+$title 		 = $section['drc_section_title'];
+$description = $section['drc_section_desc'];
 ?>
 <section class="cards-section" id="<?php echo $section_id?>">
 	<div class="container">
+		<?php
+		if ( ! empty( $title ) || ! empty( $description ) ) :
+			?>
+			<div class="section-head">
+				<?php
+				if ( ! empty( $small_title ) ) :
+					?>
+					<span class="eyebrow"><?php echo $small_title ?></span>
+					<?php
+				endif;
+
+				if ( ! empty( $title ) ) :
+					?>
+					<h2 class="display-lg"><?php echo $title ?></h2>
+					<?php
+				endif;
+
+				if ( ! empty( $description ) ) :
+				?>
+				<p class="lead" style="margin-top: 1.25rem;">
+					<?php echo $description?>
+				</p>
+				<?php
+				endif;
+				?>
+			</div>
+			<?php
+		endif;
+		?>
 		<div class="row g-3">
 			<?php
 			foreach( $double_row_cards as $key => $item ) :

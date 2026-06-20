@@ -7,7 +7,7 @@ if ( empty( $shortcode ) ) {
 
 $section_id = $section['cf_section_id'] ?: uniqid();
 ?>
-<section class="forn-section" id="<?php echo $section_id?>">
+<section class="form-section" id="<?php echo $section_id?>">
 	<div class="container d-flex justify-content-center flex-wrap">
 		<?php
 		if ( ! empty( $section['cf_logo_img'] ) ) :

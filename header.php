@@ -23,26 +23,24 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-	<header class="wp-block-template-part">
-		<div class="title">
-			<div class="container">
-				<nav id="navbar" class="navbar navbar-expand-lg">	   
-					<?php get_template_part( 'modules/main', 'logo' ); ?>
-				
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<?php get_template_part( 'modules/header', 'nav' ); ?>
-					</div>
+	<header class="site-header">
+		<div class="container header-inner">
+			<?php get_template_part( 'modules/main', 'logo' ); ?>
 
-					<ul class="navbar-nav buttons-title ml-auto">
-						<li class="nav-item">
-							<?php do_action( 'paysnapper_get_a_quote_btn' ); ?>
-						</li>
+			<nav id="navbar" class="main-nav navbar-expand-lg">	   
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<?php get_template_part( 'modules/header', 'nav' ); ?>
+				</div>
+			</nav>
 
-						<li class="nav-item">
-							<?php do_action( 'paysnapper_login_btn' ); ?>
-						</li>
-					</ul>
-				</nav>
+			<div class="header-actions ml-auto">
+				<?php
+				do_action( 'paysnapper_social_links' );
+
+				do_action( 'paysnapper_get_a_quote_btn' );
+
+				do_action( 'paysnapper_login_btn' );
+				?>
 			</div>
-		</div>	
+		</div>
 	</header>

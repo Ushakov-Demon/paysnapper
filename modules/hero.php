@@ -1,58 +1,46 @@
 <?php
 $include_hero  = carbon_get_post_meta( $id, 'include_hero' );
 
-if ( $include_hero ) : ?>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="https://gmpg.org/xfn/11">
+if ( ! $include_hero ) {
+	return;
+};
+	
+$hero_title    = carbon_get_post_meta( $id, 'hero_title' );
+$hero_subtitle = carbon_get_post_meta( $id, 'hero_subtitle' );
+$hero_desc     = carbon_get_post_meta( $id, 'hero_desc_txt' );
+$hero_image    = carbon_get_post_meta( $id, 'hero_main_img' );
+$hero_features = carbon_get_post_meta( $id, 'hero_features' );
+$hero_buttons  = carbon_get_post_meta( $id, 'hero_buttons' );
+$networks      = carbon_get_theme_option( 'social_media_links' );
 
-	<?php wp_head(); ?>
-</head>
-<?php	
-	$hero_title    = carbon_get_post_meta( $id, 'hero_title' );
-	$hero_subtitle = carbon_get_post_meta( $id, 'hero_subtitle' );
-	$hero_image    = carbon_get_post_meta( $id, 'hero_main_img' );
-	$hero_features = carbon_get_post_meta( $id, 'hero_features' );
-	$flags_list    = carbon_get_post_meta( $id, 'hero_flags' );
-	$hero_buttons  = carbon_get_post_meta( $id, 'hero_buttons' );
-	$networks      = carbon_get_theme_option( 'social_media_links' );
+$countries = new WP_Query( array(
+	'post_type'   => 'country',
+	'post_status' => 'publish',
+	'fields'      => 'ids'
+) );
 ?>
 
 <section class="title">
 	<div class="container">
-		<nav id="navbar" class="navbar navbar-expand-lg">
-		  	<?php get_template_part( 'modules/main', 'logo' ); ?>
-		  
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <?php get_template_part( 'modules/header', 'nav' ); ?>
-		  </div>
-
-		   <ul class="navbar-nav buttons-title ml-auto">
-		      <?php
-				do_action( 'paysnapper_social_links' );
-			  ?>
-
-		       <li class="nav-item">
-					<?php do_action( 'paysnapper_login_btn' ); ?>
-				</li>
-		    </ul>
-		</nav>
-
 		<?php
 			// Feautures
 			if ( ! empty( $hero_features ) ) :
 				$feat_count = count( $hero_features );
 				?>
-				<div class="title-left-menu d-flex justify-content-center align-items-center">
+				<div class="hero-trust">
 					<?php
 					foreach ( $hero_features as $key => $feature ) :
+						$check_class = ( 0 == $key ) ? ' __web-inspector-hide-shortcut__' : '';
 						?>
-						<p class="d-flex justify-content-center align-items-center">
-							<span class="dot"></span>
-
+						<span>
+							<span class="check-icon<?php echo $check_class?>">
+								<svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="5 12 10 17 19 8"></polyline>
+								</svg>
+							</span>
+							
 							<?php echo $feature['feature_name']?>
-						</p>
+						</span>
 						<?php
 					endforeach;
 					?>
@@ -62,46 +50,69 @@ if ( $include_hero ) : ?>
 		?>
 		<div class="title-left-right d-flex justify-content-between flex-wrap">
 			<div class="title-left col-12 col-lg-7 d-flex justify-content-start flex-wrap">
-				<?php
-				// Hending
-				if ( !empty( $hero_title ) ) :
-					?>
-					<h1>
-						<?php echo $hero_title?>
-					</h1>
+				<h1 class="display-xl">
 					<?php
-				endif;
+					// Hending
+					if ( !empty( $hero_title ) ) :
+						echo $hero_title;
+					endif;
 
-				// Subtitle
-				if ( !empty( $hero_subtitle ) ) :
+					// Subtitle
+					if ( !empty( $hero_subtitle ) ) :
+						?>
+						<br>
+						<span class="accent">
+							<?php echo $hero_subtitle?>
+						</span>
+						<?php
+					endif;
 					?>
-					<p class="subtitle">
-						<?php echo $hero_subtitle?>
-					</p>
-					<?php
+				</h1>
+
+				<?php
+				if ( ! empty( $hero_desc ) ) :
+				?>
+				<p class="hero-subhead">
+					<?php echo $hero_desc?>
+				</p>
+				<?php
 				endif;
-				
 				// Flags
-				if ( ! empty( $flags_list ) ) :
+				if ( $countries->have_posts() ) :
 					$flags_text = carbon_get_post_meta( $id, 'flags_list_text' );
+					$show_items_count = 6;
+					$countries_count = $countries->found_posts;
+					$diff_count = ( $countries_count - $show_items_count );
 					?>
-					<div class="flags d-flex justify-content-start align-items-center">
-						<div class="flags-inner">
+					<div class="hero-flags">
+						<div class="flag-stack d-flex">
 							<?php
-							foreach( $flags_list as $key => $item ) :
+							$items_count = 0;
+							foreach( $countries->posts as $key => $item ) :
+								if ( $show_items_count >= ( $key + 1 ) ) :
+									++$items_count;
+									$flag_image = carbon_get_post_meta( $item, 'cnt_flag_icon' );
+									$country_title = get_the_title( $item );
 								?>
-								<img class="flag<?php echo $key+1?>" src="<?php echo $item['flag_image']?>">
+								<span class="flag-pill" title="<?php echo esc_attr( $country_title )?>">
+									<img width="28" height="28" src="<?php echo esc_url( $flag_image ) ?>">
+								</span>
 								<?php
+								endif;
 							endforeach;
+
+							if ( $items_count < $countries_count ) :
+								?>
+								<span class="flag-pill" title="And more">+<?php echo $diff_count ?></span>
+								<?php
+							endif;	
 							?>
 						</div>
 
 						<?php
 						if ( ! empty( $flags_text ) ) :
 							?>
-							<p>
-								<?php echo $flags_text?>
-							</p>
+							<span class="hero-flags-label"><?php echo $flags_text?></span>
 							<?php
 						endif;
 						?>
@@ -110,12 +121,15 @@ if ( $include_hero ) : ?>
 					<?php
 					if ( ! empty( $hero_buttons ) ) :
 						?>
-						<div class="buttons d-flex justify-content-between">
+						<div class="hero-cta">
 							<?php
-							foreach ( $hero_buttons as $item ) :
+							foreach ( $hero_buttons as $i => $item ) :
 								$blank = '0' == $item['link_botton_blank'] ? " target='_blank'": "";
+								$second_class = ( 0 === $i ) ? ' btn-primary' : ' btn-ghost';
 								?>
-								<a href="<?php echo $item['link_button_src']?>"<?php echo $blank?>><?php echo $item['link_botton_label']?></a>
+								<a class="btn<?php echo $second_class?>" href="<?php echo $item['link_button_src']?>"<?php echo $blank?>>
+									<?php echo $item['link_botton_label']?>
+								</a>
 								<?php
 							endforeach;
 							?>
@@ -123,24 +137,24 @@ if ( $include_hero ) : ?>
 						<?php
 					endif;
 				endif;
+
+				wp_reset_postdata();
 				?>
 			</div>
 
-			<?php
-			if ( ! empty( $hero_image ) ) :
-				$hero_image_src = wp_get_attachment_url( $hero_image );
-				?>
-				<div class="title-rigth col-12 col-lg-5 d-flex align-items-end">
-					<img src="<?php echo $hero_image_src?>">
-				</div>
+			<div class="title-rigth col-12 col-lg-5 d-flex">
 				<?php
-			endif;
-			?>
+				if ( ! empty( $hero_image ) ) :
+					$hero_image_src = wp_get_attachment_url( $hero_image );
+					?>
+					<img src="<?php echo $hero_image_src?>">
+					<?php
+					else:
+						include_once( __DIR__ . '/phone-fraime.php' );
+				endif;
+				?>
+			</div>
+	
 		</div>
 	</div>
 </section>
-<?php
-else :
-	// If hero is not included, just show the header
-	include_once  get_template_directory() . '/header.php';
-endif;

@@ -102,14 +102,15 @@ function paysnapper_meta_fields() {
 			            'value' => '1',
 			        )
 			    ) ),	
-			Field::make( 'textarea', 'hero_subtitle',  __( 'Subtitle' ) )
+			Field::make( 'text', 'hero_subtitle',  __( 'Subtitle' ) )
 				->set_width( 50 )
 				->set_conditional_logic( array(
 			        array(
 			            'field' => 'include_hero',
 			            'value' => '1',
 			        )
-			    ) ),	
+			    ) ),
+			Field::make( 'textarea', 'hero_desc_txt', __( 'Description Text' ) ),	
 			Field::make( 'complex', 'hero_features', __( 'Features' ) )
 				->setup_labels( $features_labels )
 				->set_conditional_logic( array(
@@ -135,28 +136,6 @@ function paysnapper_meta_fields() {
 			            'value' => '1',
 			        )
 			    ) ),
-			Field::make( 'complex', 'hero_flags', __( 'Flags list' ) )
-				->setup_labels( $flags_labels )
-				->set_conditional_logic( array(
-			        array(
-			            'field' => 'include_hero',
-			            'value' => '1',
-			        )
-			    ) )
-				->set_collapsed( true )
-				->add_fields( array(
-					Field::make( 'image', 'flag_image', __( 'Flag image' ) )
-						->set_value_type( 'url' )
-						->set_required( true )
-						->set_width( 33 ),
-					Field::make( 'text', 'flag_label', __( 'Flag Label' ) )
-						->set_width( 67 )
-				) )
-				->set_header_template( '
-				    <% if (flag_label) { %>
-				        <%- flag_label %>
-				    <% } %>
-				' ),
 			Field::make( 'complex', 'hero_buttons', __( 'Link Buttons' ) )
 				->setup_labels( $buttons_labels )
 				->set_conditional_logic( array(
@@ -193,6 +172,9 @@ function paysnapper_meta_fields() {
 				// Double-row cards
 				->add_fields( 'double_row_cards_section', array(
 					Field::make( 'text', 'section_id', __( 'Section ID' ) ),
+					Field::make( 'text', 'drc_section_small_title', __( 'Small Section Title' ) ),
+					Field::make( 'text', 'drc_section_title', __( 'Section Title' ) ),
+					Field::make( 'textarea', 'drc_section_desc', __( 'Setion Description' ) ),	
 					Field::make( 'complex', 'double_row_cards', __( 'Cards' ) )
 						->setup_labels( $cards_labels )
 						->set_collapsed( true )
@@ -784,5 +766,29 @@ function paysnapper_meta_fields() {
 			->add_fields( array(
 				Field::make( 'text', 'emp_position', __( 'Job title' ) ),
 				Field::make( 'text', 'emp_linkedin', __( 'Linkedin' ) ),
+			) );
+
+		Container::make( 'post_meta', __( 'Country Flags' ) )
+			->where( 'post_type', '=', 'country' )
+			->set_context( 'side' )
+			->add_fields( array(
+				Field::make( 'image', 'cnt_flag_icon', __( 'Main Flag Icon' ) )
+					->set_required( true )
+					->set_value_type( 'url' ),
+				Field::make( 'image', 'cnt_round_flag_icon', __( 'Round Flag Icon' ) )
+					->set_value_type( 'url' )	
+			) );
+			
+		Container::make( 'post_meta', __( 'Country Details' ) )
+			->where( 'post_type', '=', 'country' )
+			->add_fields( array(
+				Field::make( 'association', 'cnt_local_wallets', __( 'Wallets' ) )
+					->set_duplicates_allowed( false )
+					->set_types( array(
+						array(
+							'type'      => 'post',
+							'post_type' => 'wallet',
+						)
+					) )
 			) );
 }

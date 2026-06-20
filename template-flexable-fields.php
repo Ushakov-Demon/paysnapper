@@ -4,6 +4,8 @@
  * Slug: child-theme/php-home
  */
 
+get_header();
+
 $id             = get_queried_object_id();
 $fields_content = carbon_get_post_meta( $id, 'custom_main_content' );
 

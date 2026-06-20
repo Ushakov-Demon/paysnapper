@@ -7,6 +7,72 @@ add_action( 'paysnapper_get_a_quote_btn', 'paysnapper_get_a_quote_btn' );
 add_action( 'paysnapper_nav_items'      , 'paysnapper_nav_items' );
 
 function paysnapper_rigister_post_types() {
+    register_post_type( 'country', [
+        'label' => null,
+        'labels' => [
+            'name'                  => __( 'Country' ),
+            'singular_name'         => __( 'Country' ),
+            'add_new'               => __( 'Add New Country' ),
+            'add_new_item'          => __( 'Add Country' ),
+            'edit_item'             => __( 'Edit Country' ),
+            'new_item'              => __( 'New Country' ),
+            'view_item'             => __( 'View Country' ),
+            'search_items'          => __( 'Search' ),
+            'not_found'             => __( 'Not Found' ),
+            'not_found_in_trash'    => __( 'Not Found in Trash' ),
+            'parent_item_colon'     => '',
+            'menu_name'             => __( 'Countries' ),
+        ],
+        'description'         => '',
+        'public'              => true,
+        'publicly_queryable'  => false,
+        'show_in_menu'        => true,
+        'show_in_rest'        => null,
+        'rest_base'           => null,
+        'show_in_nav_menus'   => true,
+        'menu_icon'           => 'dashicons-admin-site-alt',
+        'menu_position'       => 5,
+        'hierarchical'        => false,
+        'supports'            => ['title', 'editor'],
+        'taxonomies'          => [],
+        'has_archive'         => false,
+        'rewrite'             => true,
+        'query_var'           => true,
+    ] );
+    
+    register_post_type( 'wallet', [
+        'label' => null,
+        'labels' => [
+            'name'                  => __( 'Wallet' ),
+            'singular_name'         => __( 'Wallet' ),
+            'add_new'               => __( 'Add New Wallet' ),
+            'add_new_item'          => __( 'Add Wallet' ),
+            'edit_item'             => __( 'Edit Wallet' ),
+            'new_item'              => __( 'New Wallet' ),
+            'view_item'             => __( 'View Wallet' ),
+            'search_items'          => __( 'Search' ),
+            'not_found'             => __( 'Not Found' ),
+            'not_found_in_trash'    => __( 'Not Found in Trash' ),
+            'parent_item_colon'     => '',
+            'menu_name'             => __( 'Wallets' ),
+        ],
+        'description'         => '',
+        'public'              => true,
+        'publicly_queryable'  => false,
+        'show_in_menu'        => true,
+        'show_in_rest'        => null,
+        'rest_base'           => null,
+        'show_in_nav_menus'   => true,
+        'menu_icon'           => 'dashicons-money-alt',
+        'menu_position'       => 5,
+        'hierarchical'        => false,
+        'supports'            => ['title', 'editor'],
+        'taxonomies'          => [],
+        'has_archive'         => false,
+        'rewrite'             => true,
+        'query_var'           => true,
+    ] );
+
     register_post_type( 'employees', [
         'label' => null,
         'labels' => [
@@ -100,11 +166,11 @@ function paysnapper_social_link_items() {
         foreach ( $networks as $item ) :
             $icon_url = wp_get_attachment_image_url( $item['icon'] );
             ?>
-            <li class="nav-item">
+            <!-- <li class="nav-item"> -->
                 <a class="nav-link social-header" href="<?php echo $item['url']; ?>" target="_blank" rel="noopener noreferrer">
                     <img src="<?php echo $icon_url; ?>" width="25" height="25" alt="Link to <?php echo $item['platform']; ?>">
                 </a>
-            </li>
+            <!-- </li> -->
             <?php
         endforeach;
     endif;
@@ -122,7 +188,7 @@ function paysnapper_login_btn() {
         return;
     }
     ?>
-    <a class="nav-link footer-login" href="<?php echo esc_url( $btn_url ); ?>">
+    <a class="nav-link login-btn" href="<?php echo esc_url( $btn_url ); ?>">
         <?php if ( ! empty( $btn_icon ) ) : ?>
             <img src="<?php echo esc_url( $btn_icon ); ?>" width="19" height="19" alt="Login Icon">
         <?php endif; ?>
